@@ -78,3 +78,40 @@ class PlayTurnView(APIView):
                 PlayedCard.objects.create(turn=turn, team=team, card_defense=card)
 
         return Response({"message": "Turn submitted successfully"}, status=status.HTTP_201_CREATED)
+
+from django.shortcuts import render, get_object_or_404
+from .models import Game, Turn, Team, AttackCard, DefenseCard
+
+def umpire_panel(request):
+    games = Game.objects.all()
+    selected_game = None
+    red_team = None
+    blue_team = None
+    turn = None
+    attack_cards = []
+    defense_cards = []
+    budget = 0
+
+    if request.method == "POST":
+        # Process form submission (handled later)
+        pass
+
+    if "game_id" in request.GET:
+        selected_game = get_object_or_404(Game, id=request.GET["game_id"])
+        red_team = selected_game.teams.filter(role="RED").first()
+        blue_team = selected_game.teams.filter(role="BLUE").first()
+        turn = selected_game.turns.order_by("-number").first()
+        attack_cards = AttackCard.objects.all()
+        defense_cards = DefenseCard.objects.all()
+        budget = blue_team.budget if blue_team else 0
+
+    return render(request, "game/umpire_panel.html", {
+        "games": games,
+        "selected_game": selected_game,
+        "red_team": red_team,
+        "blue_team": blue_team,
+        "turn": turn,
+        "attack_cards": attack_cards,
+        "defense_cards": defense_cards,
+        "budget": budget,
+    })

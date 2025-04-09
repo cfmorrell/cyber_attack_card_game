@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework import routers
 from . import views
 from .views import PlayTurnView
+from .views import umpire_panel
 
 
 router = routers.DefaultRouter()
@@ -16,4 +17,5 @@ router.register(r'teams', views.TeamViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('play_turn/', PlayTurnView.as_view(), name='play_turn'),
+    path("umpire/", umpire_panel, name="umpire_panel"),
 ]
