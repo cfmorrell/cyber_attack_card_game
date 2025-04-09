@@ -1,11 +1,17 @@
 from django.db import models
 
+class Game(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Game {self.id} - {'Active' if self.active else 'Complete'}"
+
 class Team(models.Model):
-    TEAM_CHOICES = [
-        ('RED', 'Red Team'),
-        ('BLUE', 'Blue Team'),
-    ]
-    name = models.CharField(max_length=10, choices=TEAM_CHOICES)
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=10, choices=[("RED", "Red"), ("BLUE", "Blue")])
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    budget = models.IntegerField(default=0)  # 💸 Budget for Blue Team, ignored for Red
 
     def __str__(self):
         return self.name
@@ -34,12 +40,6 @@ class DefenseCard(models.Model):
     def __str__(self):
         return f"{self.name} - {self.cost} points"
 
-class Game(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return f"Game {self.id} - {'Active' if self.active else 'Complete'}"
 
 class Turn(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='turns')

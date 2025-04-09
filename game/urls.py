@@ -1,6 +1,8 @@
 from django.urls import path, include
 from rest_framework import routers
 from . import views
+from .views import PlayTurnView
+
 
 router = routers.DefaultRouter()
 router.register(r'attack_cards', views.AttackCardViewSet)
@@ -13,4 +15,5 @@ router.register(r'teams', views.TeamViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('play_turn/', PlayTurnView.as_view(), name='play_turn'),
 ]

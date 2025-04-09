@@ -4,6 +4,9 @@ from .serializers import (
     AttackCardSerializer, DefenseCardSerializer, GameSerializer,
     TurnSerializer, AttackChainSerializer, PlayedCardSerializer, TeamSerializer
 )
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 class AttackCardViewSet(viewsets.ModelViewSet):
     queryset = AttackCard.objects.all()
@@ -32,3 +35,46 @@ class PlayedCardViewSet(viewsets.ModelViewSet):
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+
+
+
+class PlayTurnView(APIView):
+    def post(self, request):
+        data = request.data
+        game = Game.objects.get(id=data["game_id"])
+        turn = Turn.objects.get(id=data["turn_id"])
+        team = Team.objects.get(id=data["team_id"])
+        card_ids = data["card_ids"]
+
+        if team.role == "RED":
+            if len(card_ids) != 3:
+                return Response({"error": "Red Team must play exactly 3 attack cards."}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Validate and create a new chain
+            chain = AttackChain.objects.create(game=game, active=True)
+
+            cards = [AttackCard.objects.get(id=cid) for cid in card_ids]
+            for card in cards:
+                PlayedCard.objects.create(turn=turn, team=team, card_attack=card, chain=chain)
+
+        elif team.role == "BLUE":
+            total_cost = 0
+            defense_cards = []
+
+            for cid in card_ids:
+                card = DefenseCard.objects.get(id=cid)
+                total_cost += card.cost
+                defense_cards.append(card)
+
+            if total_cost > team.budget:
+                return Response({"error": f"Not enough budget. Needed: {total_cost}, Available: {team.budget}"},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            # Deduct and roll over remaining budget
+            team.budget -= total_cost
+            team.save()
+
+            for card in defense_cards:
+                PlayedCard.objects.create(turn=turn, team=team, card_defense=card)
+
+        return Response({"message": "Turn submitted successfully"}, status=status.HTTP_201_CREATED)
