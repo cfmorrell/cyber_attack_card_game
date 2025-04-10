@@ -1,0 +1,90 @@
+digraph {
+	rankdir=LR size="20,12"
+	"Brute Force Attack" [label="Brute Force Attack" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Compromised Account" [label="Compromised Account" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Business Email Compromise" [label="Business Email Compromise" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Internal Phishing Attack" [label="Internal Phishing Attack" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Malware" [label=Malware fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Compromised PC" [label="Compromised PC" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Lateral Movement" [label="Lateral Movement" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Privilege Escalation" [label="Privilege Escalation" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Compromised Server" [label="Compromised Server" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"DDOS Attack" [label="DDOS Attack" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Defaced Web Site" [label="Defaced Web Site" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Email Reconnaissance" [label="Email Reconnaissance" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Spear Phishing" [label="Spear Phishing" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Infected USB" [label="Infected USB" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Intruder (HQ)" [label="Intruder (HQ)" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Zero Day Attack" [label="Zero Day Attack" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Intruder (Production)" [label="Intruder (Production)" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"IoT Vulnerability" [label="IoT Vulnerability" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"IoT Disruption" [label="IoT Disruption" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Lost or Stolen PC" [label="Lost or Stolen PC" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Phishing Attack" [label="Phishing Attack" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Port Scanning" [label="Port Scanning" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Database Vulnerability" [label="Database Vulnerability" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Simple Web Server Hack" [label="Simple Web Server Hack" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Spamming Attack" [label="Spamming Attack" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Targeted Scanning" [label="Targeted Scanning" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Unsecured Wireless Network" [label="Unsecured Wireless Network" fillcolor=gold fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Reputational Damage" [label="Reputational Damage" fillcolor=black fixedsize=false fontcolor=white height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Credential Theft" [label="Credential Theft" fillcolor=black fixedsize=false fontcolor=white height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Payment Diversion Fraud" [label="Payment Diversion Fraud" fillcolor=black fixedsize=false fontcolor=white height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"IoT Destruction" [label="IoT Destruction" fillcolor=black fixedsize=false fontcolor=white height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Data Exfiltration (PC)" [label="Data Exfiltration (PC)" fillcolor=black fixedsize=false fontcolor=white height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Domain Dominance" [label="Domain Dominance" fillcolor=black fixedsize=false fontcolor=white height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Data Exfiltration (Database)" [label="Data Exfiltration (Database)" fillcolor=black fixedsize=false fontcolor=white height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Data Exfiltration (Server)" [label="Data Exfiltration (Server)" fillcolor=black fixedsize=false fontcolor=white height=0.6 shape=rect style="rounded,filled" width=2.5]
+	"Remote Access Trojan"  [label="Remote Access Trojan" fillcolor=indianred fixedsize=false fontcolor=black height=0.6 shape=rect style="rounded,filled" width=2.5]
+	{
+		rank=same
+		"Brute Force Attack"
+		"DDOS Attack"
+		"Email Reconnaissance"
+		"Infected USB"
+		"Intruder (HQ)"
+		"Intruder (Production)"
+		"Lost or Stolen PC"
+		"Phishing Attack"
+		"Port Scanning"
+		"Simple Web Server Hack"
+		"Spamming Attack"
+		"Targeted Scanning"
+		"Unsecured Wireless Network"
+	}
+	"Brute Force Attack" -> "Compromised Account"
+	"Compromised Account" -> "Business Email Compromise"
+	"Business Email Compromise" -> "Payment Diversion Fraud"
+	"Compromised Account" -> "Internal Phishing Attack"
+	"Internal Phishing Attack" -> "Credential Theft"
+	"Internal Phishing Attack" -> "Malware"
+	"Malware" -> "Compromised PC"
+	"Compromised PC" -> "Lateral Movement"
+	"Lateral Movement" -> "Privilege Escalation"
+	"Privilege Escalation" -> "Domain Dominance"
+	"Lateral Movement" -> "Compromised PC"
+	"Lateral Movement" -> "Compromised Server"
+	"Compromised Server" -> "Lateral Movement"
+	"Compromised Server" -> "Data Exfiltration (Database)"
+	"Compromised Server" -> "Data Exfiltration (Server)"
+	"Compromised PC" -> "Data Exfiltration (PC)"
+	"Compromised Account" -> "Lateral Movement"
+	"Defaced Web Site" -> "Reputational Damage"
+	"Email Reconnaissance" -> "Spear Phishing"
+	"Spear Phishing" -> "Compromised Account"
+	"Infected USB" -> "Malware"
+	"Intruder (HQ)" -> "Zero Day Attack"
+	"Zero Day Attack" -> "Lateral Movement"
+	"Intruder (Production)" -> "Zero Day Attack"
+	"Intruder (Production)" -> "IoT Vulnerability"
+	"IoT Vulnerability" -> "IoT Disruption"
+	"IoT Disruption" -> "IoT Destruction"
+	"Phishing Attack" -> "Malware"
+	"Port Scanning" -> "Database Vulnerability"
+	"Database Vulnerability" -> "Lateral Movement"
+	"Simple Web Server Hack" -> "Defaced Web Site"
+	"Targeted Scanning" -> "IoT Vulnerability"
+	"Unsecured Wireless Network" -> "Compromised PC"
+	"Malware" -> "Remote Access Trojan"
+	"Remote Access Trojan" -> "Lateral Movement"
+}

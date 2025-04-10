@@ -1,0 +1,325 @@
+/* style.css */
+body {
+    font-family: system-ui, sans-serif;
+}
+
+h1, h2, h3 {
+    margin-top: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .grid > div {
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 768px) {
+    .grid > div {
+      opacity: 1;
+      transform: translateY(0px); /* you can change this for visual effect */
+    }
+  }
+  
+  
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+form label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.1rem 0;
+    padding: 0.2rem 0.4rem;
+    line-height: 0.5;
+    border-radius: 4px;
+    color: black;
+}
+
+form input[type="checkbox"] {
+    transform: scale(0.85);
+    margin: 0;
+}
+
+form {
+    font-size: 0.95rem;
+    /* max-height: 465px; */
+    overflow-y: auto;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    color: black;
+}
+
+form.card_area {
+    min-height: 409px;
+}
+
+button {
+    width: 100%;
+    border: 3px solid black;
+    color: white;
+    border-radius: 8px;
+}
+
+button.bigbuttons {
+    margin: 0;
+}
+
+button.red-team {
+    background-color: #dc3545; /* Bootstrap red */
+    border-radius: 8px;
+    margin: 0;
+    position: relative;
+    bottom: 0px;
+}
+
+button.blue-team {
+    background-color: #0d6efd; /* Bootstrap blue */
+    border-radius: 8px;
+    margin: 0;
+    position: relative;
+    bottom: 0px;}
+
+.red-team-counter, .blue-team-budget {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: black;
+    padding-left: 0.5rem;
+}
+/* Red Team Card Colors */
+label.yellow-card {
+    background-color: #fffbe6;
+    border-left: 4px solid #facc15;
+    padding-left: 0.5rem;
+}
+
+label.red-card {
+    background-color: #ffecec;
+    border-left: 4px solid #f87171;
+    padding-left: 0.5rem;
+}
+
+label.black-card {
+    background-color: #eee;
+    border-left: 4px solid #4b5563;
+    padding-left: 0.5rem;
+}
+
+.red-team-chains ul {
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+.red-team-chains li {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.chain-step {
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.chain-step.active {
+    background-color: #e0f7fa;
+    color: #007b83;
+}
+
+.chain-step.blocked {
+    background-color: #fff4e5;
+    color: #c77800;
+    text-decoration: line-through;
+}
+
+.chain-step.flipped {
+    background-color: #f8d7da;
+    color: #a80000;
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.blue-team-in-play {
+    margin-top: 1rem;
+    border-top: 1px solid #ccc;
+    padding-top: 0.5rem;
+  }
+
+.blue-defense-card {
+    background-color: #e7f3ff;
+    color: #004085;
+    font-weight: 500;
+    padding: 0.3rem 0.5rem;
+    margin-bottom: 0.25rem;
+    border-left: 4px solid #007bff;
+    border-radius: 4px;
+  }
+
+ul {
+    list-style-type: none;
+}
+
+.sp-label {
+    background-color: #ffc107;
+    color: #000;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.35rem;
+    border-radius: 3px;
+    margin-left: 0.5rem;
+    font-weight: bold;
+}
+
+.red-team-in-play {
+    margin-top: 1rem;
+    border-top: 1px solid #ccc;
+    padding-top: 0.5rem;
+  }
+  
+  .red-card-active {
+    background-color: #ffecec;
+    color: #a30000;
+    padding: 0.3rem 0.5rem;
+    margin-bottom: 0.25rem;
+    border-left: 4px solid #dc3545;
+    border-radius: 4px;
+    font-weight: 500;
+    font-family: system-ui, sans-serif;
+  }
+  
+  
+  .red-card-active.black {
+    background-color: #eee;
+    border-left-color: #333;
+    color: #000;
+  }
+  
+  .red-card-active.yellow {
+    background-color: #fffbe6;
+    border-left-color: #facc15;
+    color: #8a6d00;
+  }
+
+  .card-scroll-area {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding-right: 0.5rem;
+  }
+  
+  .advance-turn-button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  button.advance-turn-button {
+    margin: 0;
+  }
+  
+  form.red-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 409px; /* consistent with min-height you already had */
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  
+  .card-scroll-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding-right: 0.5rem;
+  }
+  
+  .red-form .red-team-counter {
+    margin-bottom: 0.5rem;
+  }
+  
+  .red-form button.red-team {
+    margin-top: auto;
+  }
+  
+  form.blue-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 409px;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  
+  .blue-form .blue-team-budget {
+    margin-bottom: 0.5rem;
+  }
+  
+  .blue-form button.blue-team {
+    margin-top: auto;
+  }
+  
+  .centered-heading {
+    text-align: center;
+  }
+  .adjudication-results {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    border-radius: 6px;
+  }
+  
+  .adjudication-entry {
+    margin-bottom: 0.75rem;
+  }
+  
+  .status-blocked {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .status-detected {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .status-success {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .adjudication-details {
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    padding-left: 1rem;
+  }
+  
+  .adjudication-panel {
+    background-color: #e6ffee;
+    border-left: 4px solid #0a0;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+.status-blocked {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .status-detected {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .status-success {
+    color: green;
+    font-weight: bold;
+  }
+  

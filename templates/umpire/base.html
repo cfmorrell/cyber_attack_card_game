@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" x-data>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Umpire Dashboard{% endblock %}</title>
+
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+          Alpine.store('formState', {
+            redSubmitted: false,
+            blueSubmitted: false
+          })
+        })
+      </script>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/morphdom-swap.js"></script>
+
+    <!-- Styling -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@latest/css/pico.min.css">
+    <link rel="stylesheet" href="{% static 'umpire/css/style.css' %}">
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1 class="centered-heading">Cyber Attack Chain – Umpire Dashboard</h1>
+        </header>
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{% extends "umpire/base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div x-data="{
+    maybeTriggerAdjudication() {
+        const store = Alpine.store('formState');
+        if (store.redSubmitted && store.blueSubmitted) {
+          console.log('🔥 Queuing adjudication trigger in 100ms');
+          setTimeout(() => {
+            document.querySelector('#adjudication-trigger')?.dispatchEvent(new Event('adjudicate'));
+          }, 100); // give DB time to catch up
+        }
+      }
+  }"
+  x-init="
+    $watch('$store.formState.redSubmitted', () => maybeTriggerAdjudication());
+    $watch('$store.formState.blueSubmitted', () => maybeTriggerAdjudication());
+  "
+  >
+<!-- <script>
+  function maybeTriggerAdjudication() {
+    const store = Alpine.store('formState');
+    if (store.redSubmitted && store.blueSubmitted) {
+      console.log('🔥 Triggering adjudication from Alpine watcher');
+      document.querySelector('#adjudication-trigger')?.dispatchEvent(new Event('adjudicate'));
+    }
+  }
+</script> -->
+
+<div
+  id="adjudication-trigger"
+  hx-get="{% url 'umpire:get_adjudication' turn.id %}"
+  hx-target="#adjudication-panel"
+  hx-swap="outerHTML"
+  hx-trigger="adjudicate"
+></div>
+
+<section>
+    <h2 class="centered-heading">Turn {{ turn.number }}</h2>
+</section>
+
+<section class="grid">
+    <div>
+        <h3>Red Team Attacks</h3>
+        <div id="red-play-area">
+            {% include "umpire/partials/red_card_form.html" %}
+          </div>
+      </div>
+
+      <div>
+        <h3>Blue Team Defenses</h3>
+        <div id="blue-play-area">
+            {% include "umpire/partials/blue_card_form.html" %}
+          </div>
+      </div>
+
+</section>
+
+<section>
+  <h3>Adjudication Results</h3>
+  {% if turn.id %}
+  <div id="adjudication-panel"
+  hx-get="{% url 'umpire:get_adjudication' turn.id %}"
+  hx-trigger="load">
+</div>
+
+{% else %}
+  <p>No turn data available for adjudication.</p>
+{% endif %}
+    <!-- Loaded on page load -->
+
+  <div x-data x-init>
+    <form method="POST" action="{% url 'umpire:next_turn' %}">
+      {% csrf_token %}
+      <button
+        type="submit"
+        :disabled="!$store.formState.redSubmitted || !$store.formState.blueSubmitted"
+        class="advance-turn-button"
+        x-text="
+  !$store.formState.redSubmitted && !$store.formState.blueSubmitted
+    ? 'Waiting for card selections'
+    : (!$store.formState.redSubmitted
+        ? 'Waiting for red card selections'
+        : (!$store.formState.blueSubmitted
+            ? 'Waiting for blue card selections'
+            : 'Advance to Turn {{ next_turn_number }}'
+          )
+      )
+"
+
+      >
+        Advance to Turn {{ turn.number|add:"1" }}
+      </button>
+    </form>
+  </div>
+  
+</section>
+
+<section style="margin-top: 2rem; text-align: center;">
+    <form method="POST" action="{% url 'umpire:reset_game' %}">
+      {% csrf_token %}
+      <button class="bigbuttons" type="submit" style="background-color: #e53e3e; color: white;">
+        Reset Game (Back to Turn 1)
+      </button>
+    </form>
+  </section>
+</div>
+{% endblock %}

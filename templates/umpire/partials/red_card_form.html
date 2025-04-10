@@ -1,0 +1,67 @@
+<div x-data="{
+    count: 0,
+    max: 3,
+    updateCount() {
+      this.count = document.querySelectorAll('input[name=red_cards]:checked').length;
+      const checkboxes = document.querySelectorAll('input[name=red_cards]');
+      checkboxes.forEach(cb => {
+        cb.disabled = (!cb.checked && this.count >= this.max);
+      });
+    },
+    refreshAdjudication() {
+      console.log('Dispatching adjudication event from Alpine');
+      document.querySelector('#adjudication-trigger')?.dispatchEvent(new Event('adjudicate'));
+    }
+  }"
+  hx-on::before-request="Alpine.store('formState').redSubmitted = true"
+  hx-on::after-request="document.querySelector('[x-data]').__x.$data.triggerAdjudication()"
+  x-init="updateCount()"
+  @change="updateCount"
+>
+  <form
+    class="card_area red-form"
+    method="POST"
+    hx-post="{% url 'umpire:submit_red_cards' %}"
+    hx-target="#red-play-area"
+    hx-swap="outerHTML"
+  >
+    {% csrf_token %}
+
+    <!-- Counter on top -->
+    <p class="red-team-counter" x-text="`Cards selected: ${count} of ${max}`"></p>
+
+    <!-- Scrollable card selection area -->
+    <div class="card-scroll-area">
+      {% for card in red_cards %}
+        <label class="{% if card.card_type == 'yellow' %}yellow-card{% elif card.card_type == 'red' %}red-card{% elif card.card_type == 'black' %}black-card{% endif %}">
+          <input type="checkbox" name="red_cards" value="{{ card.id }}" :disabled="$store.formState.redSubmitted">
+          {{ card.name }}
+        </label>
+      {% endfor %}
+    </div>
+
+    <!-- Submit button below -->
+    <button
+      type="submit"
+      class="red-team"
+      :disabled="$store.formState.redSubmitted"
+    >
+      <span x-show="!$store.formState.redSubmitted">Submit Red Team Actions</span>
+      <span x-show="$store.formState.redSubmitted">Submitted</span>
+    </button>
+  </form>
+</div>
+
+<!-- Active attack chains section BELOW the form -->
+<div class="red-team-in-play">
+  <h4>Active Attack Chains</h4>
+  <div class="red-team-in-play">
+    {% for chain in attack_chains %}
+      <p class="red-card-active">
+        Chain {{ forloop.counter }}: {{ chain|join:" → " }}
+      </p>
+    {% empty %}
+      <p>No attack chains active yet.</p>
+    {% endfor %}
+  </div>
+</div>

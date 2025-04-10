@@ -1,0 +1,35 @@
+<div class="adjudication-panel">
+    {% if adjudicated_by_turn %}
+      {% for turn_num, items in adjudicated_by_turn.items %}
+        <h4>Turn {{ turn_num }}</h4>
+        <ul>
+          {% for item in items %}
+            <li>
+              <strong>{{ item.card }}</strong> –
+              {% if "blocked" in item.status %}
+                <span class="status-blocked">Blocked</span>
+              {% endif %}
+              {% if "detected" in item.status %}
+                <span class="status-detected">Detected</span>
+              {% endif %}
+              {% if not item.status %}
+                <span class="status-success">Successful</span>
+              {% endif %}
+              {% if item.defenders.blocked %}
+                <br>Blocked by: {{ item.defenders.blocked|join:", " }}
+              {% endif %}
+              {% if item.defenders.detected %}
+                <br>Detected by: {{ item.defenders.detected|join:", " }}
+              {% endif %}
+              {% if item.symptom %}
+                <br><em>Symptom: {{ item.symptom }}</em>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+    {% else %}
+      <p>No Red Team actions to adjudicate.</p>
+    {% endif %}
+  </div>
+  

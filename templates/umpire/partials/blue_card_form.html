@@ -1,0 +1,101 @@
+<div x-data="{
+    budget: {{ blue_budget|default:70 }},
+    spActive: {{ sp_active|yesno:'true,false' }},
+    submitted: false,
+    updateBudget() {
+      const checkboxes = document.querySelectorAll('input[name=blue_cards]');
+      let total = 0;
+
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          total += parseInt(cb.dataset.cost);
+        }
+      });
+
+      this.budget = {{ blue_budget|default:70 }} - total;
+
+      checkboxes.forEach(cb => {
+        const cost = parseInt(cb.dataset.cost);
+        const isSP = cb.dataset.spRequired === 'true';
+
+        if (
+          (!cb.checked && (total + cost > {{ blue_budget|default:70 }})) ||
+          (isSP && !this.spActive) ||
+          this.submitted
+        ) {
+          cb.disabled = true;
+        } else {
+          cb.disabled = false;
+        }
+      });
+    },
+    refreshAdjudication() {
+      console.log('Dispatching adjudication event from Alpine (Blue)');
+      document.querySelector('#adjudication-trigger')?.dispatchEvent(new Event('adjudicate'));
+    }
+  }"
+  hx-on::before-request="Alpine.store('formState').blueSubmitted = true"
+  hx-on::after-request="document.querySelector('[x-data]').__x.$data.triggerAdjudication()"
+
+    x-init="updateBudget()"
+  @change="updateBudget"
+>
+
+    <form
+      class="card_area blue-form"
+      method="POST"
+      hx-post="{% url 'umpire:submit_blue_cards' %}"
+      hx-target="#blue-play-area"
+      hx-swap="outerHTML"
+      hx-on::after-request="
+      console.log('Triggering adjudication via event');
+      htmx.trigger('#adjudication-trigger', 'adjudicate');
+    "
+    >
+      {% csrf_token %}
+  
+      <p class="blue-team-budget" x-text="`Budget remaining: ${budget} pts`"></p>
+  
+      <div class="card-scroll-area">
+        {% for card in blue_cards %}
+          <label>
+            <input
+              type="checkbox"
+              name="blue_cards"
+              value="{{ card.id }}"
+              data-cost="{{ card.cost }}"
+              :disabled="$store.formState.blueSubmitted"
+              {% if card.sp_required %}data-sp-required="true"{% else %}data-sp-required="false"{% endif %}
+              {% if card.sp_required and not sp_active %}title="Requires Security Platform"{% endif %}
+            >
+            {{ card.name }} ({{ card.cost }})
+            {% if card.sp_required %}<span class="sp-label">SP</span>{% endif %}
+          </label>
+        {% endfor %}
+      </div>
+  
+      <button
+        type="submit"
+        class="blue-team"
+        :disabled="$store.formState.blueSubmitted"
+      >
+        <span x-show="!$store.formState.blueSubmitted">Submit Blue Team Actions</span>
+        <span x-show="$store.formState.blueSubmitted">Submitted</span>
+      </button>
+    </form>
+  
+    <div class="blue-team-in-play">
+      <h4>Active Blue Team Defenses</h4>
+      <div class="blue-team-in-play">
+        {% for card in blue_played %}
+          <p class="blue-defense-card {% if card.card.sp_required %}sp-card{% endif %}">
+            {{ card.card.name }} ({{ card.card.cost }} pts)
+            {% if card.card.sp_required %}<span class="sp-label">SP</span>{% endif %}
+          </p>
+        {% empty %}
+          <p>No defenses played yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  
