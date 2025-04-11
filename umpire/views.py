@@ -22,6 +22,16 @@ def dashboard(request):
     red_played = PlayedCard.objects.filter(turn__game=game, team="red").order_by("turn__number", "id")
     attack_chains = build_attack_chains(red_played)
 
+    # Played Blue cards
+    blue_cards_all = PlayedCard.objects.filter(turn__game=game, team="blue").select_related("card")
+    active_blue_card_names = [p.card.name for p in blue_cards_all]
+
+    # Adjudicate red cards across all turns
+    adjudication_by_card = {}
+    for red in red_played:
+        result = adjudicate_red_card(red.card.name, active_blue_card_names)
+        adjudication_by_card[red.card.name] = result
+
     context = {
     "turn": turn,
     "next_turn_number": turn.number + 1,
@@ -34,6 +44,7 @@ def dashboard(request):
     "blue_budget": turn.blue_budget or 70,  # Fallback
     "sp_active": PlayedCard.objects.filter(turn__game=game, team="blue", card__name="Security Platform").exists(),
     "chains": [],  # Optional for now
+    "adjudication_by_card": adjudication_by_card,
     }
 
     return render(request, "umpire/dashboard.html", context)
@@ -147,7 +158,7 @@ def get_adjudication(request, turn_id):
     print("🧪 Adjudicating by turn:")
     for turn_num, items in adjudicated_by_turn.items():
         print(f"  Turn {turn_num}: {[r['card'] for r in items]}")
-        
+
     context = {
         "turn": turn,
         "adjudicated_by_turn": dict(adjudicated_by_turn)

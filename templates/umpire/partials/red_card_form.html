@@ -1,3 +1,5 @@
+{% load custom_filters %}
+
 <div x-data="{
     count: 0,
     max: 3,
@@ -57,11 +59,19 @@
   <h4>Active Attack Chains</h4>
   <div class="red-team-in-play">
     {% for chain in attack_chains %}
-      <p class="red-card-active">
-        Chain {{ forloop.counter }}: {{ chain|join:" → " }}
-      </p>
-    {% empty %}
-      <p>No attack chains active yet.</p>
-    {% endfor %}
+    <p class="red-card-active">
+      Chain {{ forloop.counter }}:
+      {% for step in chain %}
+        {% with result=adjudication_by_card|get_item:step %}
+          <span class="chain-step {% if result and 'blocked' in result.status %}blocked{% endif %}">
+            {{ step }}
+          </span>
+          {% if not forloop.last %} → {% endif %}
+        {% endwith %}
+      {% endfor %}
+    </p>
+  {% empty %}
+    <p>No attack chains active yet.</p>
+  {% endfor %}
   </div>
 </div>

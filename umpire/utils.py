@@ -101,5 +101,5 @@ def adjudicate_red_card(card_name, active_blue_cards):
             "blocked": blocked,
             "detected": detected
         },
-        "symptom": effectiveness.get("symptom")
+        "symptom": effectiveness.get("symptom")  # always include
     }

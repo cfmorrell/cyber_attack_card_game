@@ -323,3 +323,9 @@ ul {
     font-weight: bold;
   }
   
+  .chain-step.blocked {
+    background-color: #fff4e5;
+    color: #c77800;
+    text-decoration: line-through;
+  }
+  

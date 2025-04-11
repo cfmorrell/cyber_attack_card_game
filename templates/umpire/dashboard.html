@@ -18,15 +18,6 @@
     $watch('$store.formState.blueSubmitted', () => maybeTriggerAdjudication());
   "
   >
-<!-- <script>
-  function maybeTriggerAdjudication() {
-    const store = Alpine.store('formState');
-    if (store.redSubmitted && store.blueSubmitted) {
-      console.log('🔥 Triggering adjudication from Alpine watcher');
-      document.querySelector('#adjudication-trigger')?.dispatchEvent(new Event('adjudicate'));
-    }
-  }
-</script> -->
 
 <div
   id="adjudication-trigger"
